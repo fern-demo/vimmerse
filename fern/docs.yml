@@ -1,0 +1,32 @@
+# yaml-language-server: $schema=https://schema.buildwithfern.dev/docs-yml.json
+
+instances:
+  - url: vimmerse.docs.buildwithfern.com
+
+title: Vimmerse API Docs
+
+colors:
+  accent-primary:
+    dark: "#7C5CFC"
+    light: "#5A3FD6"
+  background:
+    dark: "#0D0E11"
+    light: "#FFFFFF"
+
+default-language: python
+
+navbar-links:
+  - type: filled
+    text: Contact Us
+    href: https://www.vimmerse.net/contact-us
+
+navigation:
+  - section: Get Started
+    contents:
+      - page: Introduction
+        path: ./pages/introduction.mdx
+      - page: Authentication
+        path: ./pages/authentication.mdx
+      - page: Quickstart
+        path: ./pages/quickstart.mdx
+  - api: API Reference

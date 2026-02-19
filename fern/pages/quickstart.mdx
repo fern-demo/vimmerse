@@ -1,0 +1,126 @@
+---
+title: Quickstart
+subtitle: Create your first AI-generated video in minutes
+slug: quickstart
+---
+
+This guide walks you through creating a video from a text prompt and polling for the result.
+
+## Prerequisites
+
+- A Vimmerse API key ([get one here](https://www.vimmerse.net/contact-us))
+- Python 3.7+ with the `requests` library
+
+```bash
+pip install requests
+```
+
+## Step 1: Create a media object
+
+Send a POST request to `/media` with a text prompt to generate a video:
+
+```python
+import requests
+import json
+
+BASE_URL = "https://api.vimmerse.net"
+API_KEY = "YOUR_API_KEY"
+
+url = f"{BASE_URL}/media"
+headers = {"X-Api-Key": API_KEY}
+
+payload = {
+    "title": "My First Video",
+    "prompt": "A golden retriever running through a sunny meadow with wildflowers",
+    "motion_type": "Auto",
+    "duration": 5,
+    "aspect_ratio": "16:9",
+}
+
+response = requests.post(url, headers=headers, data=payload, timeout=60)
+response.raise_for_status()
+
+result = response.json()
+media_id = result["data"]["id"]
+print(f"Media created! ID: {media_id}")
+```
+
+## Step 2: Poll for completion
+
+Video generation takes time. Poll the status endpoint until it completes:
+
+```python
+import time
+
+def get_status(media_id):
+    url = f"{BASE_URL}/media/{media_id}/processing-status"
+    headers = {"X-Api-Key": API_KEY}
+    response = requests.get(url, headers=headers, timeout=30)
+    response.raise_for_status()
+    return response.json()["data"]
+
+while True:
+    status_data = get_status(media_id)
+    status = status_data.get("processing_status")
+    progress = status_data.get("progress_percentage", 0)
+
+    print(f"Status: {status} | Progress: {progress}%")
+
+    if status == "success":
+        print("Video is ready!")
+        break
+    elif status == "fail":
+        print("Video generation failed.")
+        break
+
+    time.sleep(30)
+```
+
+## Step 3: Download the video
+
+Once processing is complete, download the final video:
+
+```python
+download_url = f"{BASE_URL}/media/{media_id}/download"
+video_response = requests.get(download_url, headers=headers, stream=True, timeout=60)
+video_response.raise_for_status()
+
+with open("my_first_video.mp4", "wb") as f:
+    for chunk in video_response.iter_content(chunk_size=8192):
+        f.write(chunk)
+
+print("Video downloaded to my_first_video.mp4")
+```
+
+## Using webhooks instead of polling
+
+For production use, configure a webhook URL to receive a notification when processing completes instead of polling:
+
+```python
+payload = {
+    "title": "My First Video",
+    "prompt": "A golden retriever running through a sunny meadow",
+    "motion_type": "Auto",
+    "duration": 5,
+    "aspect_ratio": "16:9",
+    "webhook_url": "https://your-domain.com/webhook/callback",
+}
+
+response = requests.post(url, headers=headers, data=payload, timeout=60)
+```
+
+When the video is ready, your webhook endpoint receives a POST request with:
+
+```json
+{
+  "customer_id": "your-customer-id",
+  "batch_id": "media-id-here",
+  "status": "success"
+}
+```
+
+## Next steps
+
+- Explore the [Media API](/api-reference/media/create-media) for image-to-video and advanced options
+- Try the [Story API](/api-reference/story/create-story-from-idea) to generate multi-scene video stories
+- Set up [Workflows](/api-reference/workflow/create-workflow) for complex video processing pipelines
