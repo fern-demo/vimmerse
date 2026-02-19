@@ -1,0 +1,95 @@
+paths:
+  /media/media_id/process:
+    post:
+      x-fern-examples:
+        - path-parameters:
+            media_id: media_id
+          response:
+            body:
+              data: {}
+  /story/story_id/concat:
+    post:
+      x-fern-examples:
+        - path-parameters:
+            story_id: story_id
+  /story/story_id:
+    delete:
+      x-fern-examples:
+        - path-parameters:
+            story_id: story_id
+          response:
+            body:
+              id: a1b2c3d4-e5f6-7890-ab12-cd34ef567890
+              email: user@example.com
+              manager_id: mgr-123456
+              customer_id: vimmerse-product
+              title: Summer Vacation Highlights
+              description: A short story video capturing the best moments of summer vacation.
+              visibility_status: '1'
+              idea: Create a vibrant video showcasing summer beach activities with upbeat music
+              storyboard:
+                scenes:
+                  - scene_id: scene1
+                    description: Kids playing beach volleyball
+                  - scene_id: scene2
+                    description: Sunset over the ocean
+              scenes:
+                - id: scene1
+                  image_url: https://cdn.vimmerse.net/scenes/scene1.jpg
+                - id: scene2
+                  image_url: https://cdn.vimmerse.net/scenes/scene2.jpg
+              story_version: 1
+              is_transition: true
+              medias:
+                - type: video
+                  url: https://cdn.vimmerse.net/videos/scene1.mp4
+              failed_medias: []
+              image_urls:
+                - https://cdn.vimmerse.net/images/beach1.jpg
+                - https://cdn.vimmerse.net/images/beach2.jpg
+              image_prompts:
+                - children playing volleyball on the beach
+                - sunset over ocean horizon
+              elements: {}
+              elements_option: auto
+              scene_option: standard
+              generate_elements: true
+              enhance_image: false
+              aspect_ratio: '16:9'
+              scene_count: 2
+              concat_video_urls:
+                - https://cdn.vimmerse.net/videos/concat1.mp4
+              video_url: https://cdn.vimmerse.net/videos/summer_vacation_highlights.mp4
+              pose_preset:
+                - motion_type: Auto
+                  prompt_strength: 3
+                  quantity: 1
+                  motion_amount: 5
+                  motion_length: 5
+                  loop: 1
+                  prompt: beach volleyball action
+              submit_params:
+                scale_factor: '1'
+                pipeline_preset: Fast
+                file_size: 1080p
+                native_audio: false
+                extend_video: 'No'
+              progress_percentage: 100
+              status: deleted
+              story_status: DELETED
+              webhook_url: null
+              language: English
+              audio_urls:
+                - https://cdn.vimmerse.net/audio/background_music.mp3
+              audio_option:
+                has_bg_music: true
+                has_narration: false
+                native_audio: false
+              used_credits: 5
+              version: '2'
+              created_at: '2024-05-20T10:15:30Z'
+              updated_at: '2024-06-01T12:00:00Z'
+              storyboard_at: '2024-05-20T10:20:00Z'
+              elements_at: '2024-05-21T08:00:00Z'
+              scenes_at: '2024-05-22T09:30:00Z'
+              finished_at: '2024-05-25T14:45:00Z'

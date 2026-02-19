@@ -5,6 +5,12 @@ instances:
 
 title: Vimmerse API Docs
 
+logo:
+  href: https://www.vimmerse.net
+  dark: ./assets/logo.png
+  light: ./assets/logo.png
+  height: 28
+
 colors:
   accent-primary:
     dark: "#7C5CFC"
